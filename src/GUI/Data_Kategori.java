@@ -55,7 +55,7 @@ public class Data_Kategori extends javax.swing.JInternalFrame {
 
     public void tanggal() {
         Date tgl = new Date();
-        btnTanggal.setDateFormat(DateFormat.getInstance()); //Beda
+        btnTanggal.setDate(tgl);
     }
 
     public void lebarKolom() {
@@ -138,12 +138,12 @@ public class Data_Kategori extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
         panelTitle = new javax.swing.JPanel();
         lbTitle = new javax.swing.JLabel();
         mainPanel = new javax.swing.JPanel();
         leftPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        btnTanggal = new datechooser.beans.DateChooserCombo();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -155,6 +155,7 @@ public class Data_Kategori extends javax.swing.JInternalFrame {
         btnHapus = new javax.swing.JButton();
         btnBersih = new javax.swing.JButton();
         btnBatal = new javax.swing.JButton();
+        btnTanggal = new com.toedter.calendar.JDateChooser();
         rightPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelKategori = new javax.swing.JTable();
@@ -228,22 +229,32 @@ public class Data_Kategori extends javax.swing.JInternalFrame {
         btnTambah.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
         btnTambah.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/plus.png"))); // NOI18N
         btnTambah.setText("Tambah");
+        btnTambah.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnTambah.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTambahActionPerformed(evt);
+            }
+        });
 
         btnUbah.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
         btnUbah.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/editing.png"))); // NOI18N
         btnUbah.setText("Ubah");
+        btnUbah.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         btnHapus.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
         btnHapus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/bin.png"))); // NOI18N
         btnHapus.setText("Hapus");
+        btnHapus.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         btnBersih.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
         btnBersih.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/eraser.png"))); // NOI18N
         btnBersih.setText("Bersih");
+        btnBersih.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         btnBatal.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
         btnBatal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/x.png"))); // NOI18N
         btnBatal.setText("Batal");
+        btnBatal.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout leftPanelLayout = new javax.swing.GroupLayout(leftPanel);
         leftPanel.setLayout(leftPanelLayout);
@@ -282,7 +293,7 @@ public class Data_Kategori extends javax.swing.JInternalFrame {
             leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(leftPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                .addGroup(leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(btnTanggal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
@@ -387,6 +398,34 @@ public class Data_Kategori extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_inpKetKatActionPerformed
 
+    private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahActionPerformed
+        if (inpKodeKat.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Kode Kategori tidak boleh kosong");
+        } else if (inpNamaKat.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Nama Kategori tidak boleh kosong");
+        } else {
+            String sql = "INSERT into tb_kategori values (?,?,?,?)";
+            String tampilan = "dd-MM-yyyy";
+            SimpleDateFormat fm = new SimpleDateFormat(tampilan);
+            String tanggal = String.valueOf(fm.format(btnTanggal.getDate()));
+            try {
+                PreparedStatement stat = conn.prepareStatement(sql);
+                stat.setString(1, tanggal.toString());
+                stat.setString(2, inpKodeKat.getText());
+                stat.setString(3, inpNamaKat.getText());
+                stat.setString(4, inpKetKat.getText());
+                stat.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Data Berhasil Disimpan");
+                kosong();
+                dataTable();
+                lebarKolom();
+                inpKodeKat.requestFocus();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Data Gagal Disimpan" + e);
+            }
+        }
+    }//GEN-LAST:event_btnTambahActionPerformed
+
     void setExtendedState(int MAXIMIZED_BOTH) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -397,11 +436,12 @@ public class Data_Kategori extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnBersih;
     private javax.swing.JButton btnHapus;
     private javax.swing.JButton btnTambah;
-    private datechooser.beans.DateChooserCombo btnTanggal;
+    private com.toedter.calendar.JDateChooser btnTanggal;
     private javax.swing.JButton btnUbah;
     private javax.swing.JTextField inpKetKat;
     private javax.swing.JTextField inpKodeKat;
     private javax.swing.JTextField inpNamaKat;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

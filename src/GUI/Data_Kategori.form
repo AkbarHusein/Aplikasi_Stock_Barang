@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JInternalFrameFormInfo">
+  <NonVisualComponents>
+    <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser1">
+    </Component>
+  </NonVisualComponents>
   <Properties>
     <Property name="closable" type="boolean" value="true"/>
     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -197,9 +201,9 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="2" attributes="0">
-                          <Component id="jLabel1" alignment="2" max="-2" attributes="0"/>
-                          <Component id="btnTanggal" alignment="2" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jLabel1" max="-2" attributes="0"/>
+                          <Component id="btnTanggal" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="2" attributes="0">
@@ -243,8 +247,6 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Tanggal"/>
               </Properties>
-            </Component>
-            <Component class="datechooser.beans.DateChooserCombo" name="btnTanggal">
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel2">
               <Properties>
@@ -305,7 +307,13 @@
                   <Image iconType="3" name="/assets/plus.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Tambah"/>
+                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                  <Color id="Hand Cursor"/>
+                </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTambahActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnUbah">
               <Properties>
@@ -316,6 +324,9 @@
                   <Image iconType="3" name="/assets/editing.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Ubah"/>
+                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                  <Color id="Hand Cursor"/>
+                </Property>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="btnHapus">
@@ -327,6 +338,9 @@
                   <Image iconType="3" name="/assets/bin.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Hapus"/>
+                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                  <Color id="Hand Cursor"/>
+                </Property>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="btnBersih">
@@ -338,6 +352,9 @@
                   <Image iconType="3" name="/assets/eraser.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Bersih"/>
+                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                  <Color id="Hand Cursor"/>
+                </Property>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="btnBatal">
@@ -349,7 +366,12 @@
                   <Image iconType="3" name="/assets/x.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Batal"/>
+                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                  <Color id="Hand Cursor"/>
+                </Property>
               </Properties>
+            </Component>
+            <Component class="com.toedter.calendar.JDateChooser" name="btnTanggal">
             </Component>
           </SubComponents>
         </Container>
