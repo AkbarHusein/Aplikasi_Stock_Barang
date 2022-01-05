@@ -58,6 +58,7 @@ public class Login extends javax.swing.JFrame {
         lbUsername.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
         lbUsername.setText("Username");
 
+        inpPassword.setText("admin");
         inpPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 inpPasswordActionPerformed(evt);
@@ -67,9 +68,15 @@ public class Login extends javax.swing.JFrame {
         lbPassword.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
         lbPassword.setText("Password");
 
+        inpUsername.setText("admin");
         inpUsername.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 inpUsernameActionPerformed(evt);
+            }
+        });
+        inpUsername.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                inpUsernameKeyPressed(evt);
             }
         });
 
@@ -228,6 +235,10 @@ public class Login extends javax.swing.JFrame {
     private void btnLoginMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMouseReleased
         // TODO add your handling code here:
     }//GEN-LAST:event_btnLoginMouseReleased
+
+    private void inpUsernameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inpUsernameKeyPressed
+            // TODO add your handling code here:
+    }//GEN-LAST:event_inpUsernameKeyPressed
 
     /**
      * @param args the command line arguments

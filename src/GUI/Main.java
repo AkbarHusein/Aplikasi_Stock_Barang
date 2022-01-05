@@ -1,25 +1,32 @@
 package GUI;
 
+import java.sql.Connection;
 import javax.swing.JInternalFrame;
 import javax.swing.plaf.InternalFrameUI;
+import koneksi.Koneksi;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author Husein
  */
 public class Main extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Main
-     */
+    private final Connection conn = new Koneksi().connect();
+
+    private void initForm(){
+        desktopPanel.removeAll();
+        Data_Barang barang = new Data_Barang();
+        desktopPanel.add(barang).setVisible(true);
+    }
+    
     public Main() {
         initComponents();
+        initForm();
     }
 
     /**
@@ -35,6 +42,7 @@ public class Main extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         btnDataKat = new javax.swing.JButton();
         desktopPanel = new javax.swing.JDesktopPane();
+        btnDataBarang = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -46,6 +54,7 @@ public class Main extends javax.swing.JFrame {
 
         btnDataKat.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
         btnDataKat.setText("Data Kategori");
+        btnDataKat.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnDataKat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDataKatActionPerformed(evt);
@@ -59,25 +68,38 @@ public class Main extends javax.swing.JFrame {
         desktopPanel.setLayout(desktopPanelLayout);
         desktopPanelLayout.setHorizontalGroup(
             desktopPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 560, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         desktopPanelLayout.setVerticalGroup(
             desktopPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 420, Short.MAX_VALUE)
         );
 
+        btnDataBarang.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
+        btnDataBarang.setText("Data Barang");
+        btnDataBarang.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnDataBarang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDataBarangActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout ContainerLayout = new javax.swing.GroupLayout(Container);
         Container.setLayout(ContainerLayout);
         ContainerLayout.setHorizontalGroup(
             ContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ContainerLayout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addGroup(ContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                .addGap(20, 20, 20)
+                .addGroup(ContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnDataKat)
-                    .addComponent(jLabel1))
-                .addGap(19, 19, 19)
+                    .addComponent(btnDataBarang, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(desktopPanel)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.CENTER, ContainerLayout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addComponent(jLabel1)
+                .addGap(609, 609, 609))
         );
         ContainerLayout.setVerticalGroup(
             ContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -87,9 +109,11 @@ public class Main extends javax.swing.JFrame {
                     .addComponent(desktopPanel)
                     .addGroup(ContainerLayout.createSequentialGroup()
                         .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnDataBarang)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnDataKat)
-                        .addGap(0, 371, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -108,10 +132,17 @@ public class Main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDataKatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDataKatActionPerformed
-         desktopPanel.removeAll();
-         Data_Kategori kategori = new Data_Kategori();
-         desktopPanel.add(kategori).setVisible(true);
+        desktopPanel.removeAll();
+        Data_Kategori kategori = new Data_Kategori();
+        desktopPanel.add(kategori).setVisible(true);
     }//GEN-LAST:event_btnDataKatActionPerformed
+
+    private void btnDataBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDataBarangActionPerformed
+
+        desktopPanel.removeAll();
+        Data_Barang data_barang = new Data_Barang();
+        desktopPanel.add(data_barang).setVisible(true);
+    }//GEN-LAST:event_btnDataBarangActionPerformed
 
     /**
      * @param args the command line arguments
@@ -150,6 +181,7 @@ public class Main extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Container;
+    private javax.swing.JButton btnDataBarang;
     private javax.swing.JButton btnDataKat;
     private javax.swing.JDesktopPane desktopPanel;
     private javax.swing.JLabel jLabel1;
