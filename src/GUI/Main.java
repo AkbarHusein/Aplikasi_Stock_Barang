@@ -1,8 +1,9 @@
 package GUI;
 
 import java.sql.Connection;
-import javax.swing.JInternalFrame;
-import javax.swing.plaf.InternalFrameUI;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
 import koneksi.Koneksi;
 
 /*
@@ -18,12 +19,12 @@ public class Main extends javax.swing.JFrame {
 
     private final Connection conn = new Koneksi().connect();
 
-    private void initForm(){
+    private void initForm() {
         desktopPanel.removeAll();
         Data_Barang barang = new Data_Barang();
         desktopPanel.add(barang).setVisible(true);
     }
-    
+
     public Main() {
         initComponents();
         initForm();
@@ -38,13 +39,136 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        pemasok = new javax.swing.JDialog();
+        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        inpNamaPemasok = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        inpNoHp = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        inpAlamat = new javax.swing.JTextField();
+        btnSimpanPemasok = new javax.swing.JButton();
         Container = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         btnDataKat = new javax.swing.JButton();
         desktopPanel = new javax.swing.JDesktopPane();
         btnDataBarang = new javax.swing.JButton();
+        btnDataPemasok = new javax.swing.JButton();
+
+        pemasok.setTitle("Data Pemasok");
+        pemasok.setSize(new java.awt.Dimension(400, 320));
+
+        jPanel1.setBackground(new java.awt.Color(38, 70, 83));
+
+        jPanel2.setBackground(new java.awt.Color(2, 48, 71));
+
+        jLabel5.setFont(new java.awt.Font("Poppins", 1, 24)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 183, 3));
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("Data Pemasok");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel5)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jLabel8.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("Nama");
+
+        jLabel9.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setText("No HP");
+
+        jLabel10.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("Alamat");
+
+        btnSimpanPemasok.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
+        btnSimpanPemasok.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/writing.png"))); // NOI18N
+        btnSimpanPemasok.setText("Simpan");
+        btnSimpanPemasok.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnSimpanPemasok.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSimpanPemasokActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnSimpanPemasok))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel10)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
+                                .addComponent(inpAlamat, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(inpNoHp, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(inpNamaPemasok, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(29, 29, 29))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(inpNamaPemasok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(inpNoHp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(inpAlamat, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(btnSimpanPemasok)
+                .addContainerGap(51, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout pemasokLayout = new javax.swing.GroupLayout(pemasok.getContentPane());
+        pemasok.getContentPane().setLayout(pemasokLayout);
+        pemasokLayout.setHorizontalGroup(
+            pemasokLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        pemasokLayout.setVerticalGroup(
+            pemasokLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Data Pemasok");
 
         Container.setBackground(new java.awt.Color(38, 70, 83));
 
@@ -84,6 +208,15 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
+        btnDataPemasok.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
+        btnDataPemasok.setText("Data Pemasok");
+        btnDataPemasok.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnDataPemasok.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDataPemasokActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout ContainerLayout = new javax.swing.GroupLayout(Container);
         Container.setLayout(ContainerLayout);
         ContainerLayout.setHorizontalGroup(
@@ -92,7 +225,8 @@ public class Main extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addGroup(ContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnDataKat)
-                    .addComponent(btnDataBarang, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnDataBarang, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnDataPemasok))
                 .addGap(18, 18, 18)
                 .addComponent(desktopPanel)
                 .addContainerGap())
@@ -113,6 +247,8 @@ public class Main extends javax.swing.JFrame {
                         .addComponent(btnDataBarang)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnDataKat)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnDataPemasok)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -143,6 +279,27 @@ public class Main extends javax.swing.JFrame {
         Data_Barang data_barang = new Data_Barang();
         desktopPanel.add(data_barang).setVisible(true);
     }//GEN-LAST:event_btnDataBarangActionPerformed
+
+    private void btnDataPemasokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDataPemasokActionPerformed
+        pemasok.setLocationRelativeTo(this);
+        pemasok.setVisible(true);
+    }//GEN-LAST:event_btnDataPemasokActionPerformed
+
+    private void btnSimpanPemasokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanPemasokActionPerformed
+        String nama = inpNamaPemasok.getText(), hp = inpNoHp.getText(), alamat = inpAlamat.getText();
+        String sql = "INSERT INTO `db_stock_barang`.`tb_supplier` (`nama`, `nohp`, `alamat`) VALUES ('" + nama + "', '" + hp + "', '" + alamat + "');";
+
+        try {
+            PreparedStatement stat = conn.prepareStatement(sql);
+
+            stat.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Data Berhasil Disimpan");
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Data Gagal Disimpan" + e);
+        }
+        pemasok.dispose();
+    }//GEN-LAST:event_btnSimpanPemasokActionPerformed
 
     /**
      * @param args the command line arguments
@@ -183,7 +340,19 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JPanel Container;
     private javax.swing.JButton btnDataBarang;
     private javax.swing.JButton btnDataKat;
+    private javax.swing.JButton btnDataPemasok;
+    private javax.swing.JButton btnSimpanPemasok;
     private javax.swing.JDesktopPane desktopPanel;
+    private javax.swing.JTextField inpAlamat;
+    private javax.swing.JTextField inpNamaPemasok;
+    private javax.swing.JTextField inpNoHp;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JDialog pemasok;
     // End of variables declaration//GEN-END:variables
 }

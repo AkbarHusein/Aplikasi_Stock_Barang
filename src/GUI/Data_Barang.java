@@ -8,16 +8,20 @@ package GUI;
 import java.awt.Dialog;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
@@ -28,6 +32,7 @@ public class Data_Barang extends javax.swing.JInternalFrame {
     public final Connection conn = new Koneksi().connect();
     private DefaultTableModel tabmode;
     private DefaultTableModel tabmode2;
+    private DefaultTableModel tabmode3;
 
     private void aktif() {
         inpKodeBarang.setEnabled(true);
@@ -63,6 +68,14 @@ public class Data_Barang extends javax.swing.JInternalFrame {
         }
     }
 
+    public void noTable3() {
+        int Baris = tabmode3.getRowCount();
+        for (int a = 0; a < Baris; a++) {
+            String nomor = String.valueOf(a + 1);
+            tabmode3.setValueAt(nomor + ".", a, 0);
+        }
+    }
+
     public void tanggal() {
         Date tgl = new Date();
         btnTanggal.setDate(null);
@@ -84,14 +97,25 @@ public class Data_Barang extends javax.swing.JInternalFrame {
     }
 
     public void lebarKolom2() {
-        TableColumn column2;
+        TableColumn kolom2;
         tabelKategori.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
-        column2 = tabelKategori.getColumnModel().getColumn(0);
-        column2.setPreferredWidth(40);
-        column2 = tabelKategori.getColumnModel().getColumn(1);
-        column2.setPreferredWidth(150);
-        column2 = tabelKategori.getColumnModel().getColumn(2);
-        column2.setPreferredWidth(200);
+        kolom2 = tabelKategori.getColumnModel().getColumn(0);
+        kolom2.setPreferredWidth(40);
+        kolom2 = tabelKategori.getColumnModel().getColumn(1);
+        kolom2.setPreferredWidth(150);
+        kolom2 = tabelKategori.getColumnModel().getColumn(2);
+        kolom2.setPreferredWidth(200);
+    }
+
+    public void lebarKolom3() {
+        TableColumn kolom3;
+        tabelKategori.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        kolom3 = tabelPemasok.getColumnModel().getColumn(0);
+        kolom3.setPreferredWidth(40);
+        kolom3 = tabelPemasok.getColumnModel().getColumn(1);
+        kolom3.setPreferredWidth(150);
+        kolom3 = tabelPemasok.getColumnModel().getColumn(2);
+        kolom3.setPreferredWidth(200);
     }
 
     public void dataTable() {
@@ -139,6 +163,29 @@ public class Data_Barang extends javax.swing.JInternalFrame {
                 lebarKolom2();
             }
         } catch (Exception e) {
+        }
+    }
+
+    public void dataTable3() {
+        Object[] Baris = {"No", "Kode", "Nama"};
+        tabmode3 = new DefaultTableModel(null, Baris);
+        tabelPemasok.setModel(tabmode3);
+        String sql = "SELECT * FROM tb_supplier ORDER BY kode ASC";
+        try {
+            java.sql.Statement stat = conn.createStatement();
+            ResultSet hasil = stat.executeQuery(sql);
+
+            System.out.println(hasil);
+            while (hasil.next()) {
+                String kodePemasok = hasil.getString("kode");
+                String namaPemasok = hasil.getString("nama");
+                String[] data = {"", kodePemasok, namaPemasok};
+                tabmode3.addRow(data);
+                noTable3();
+                lebarKolom3();
+            }
+        } catch (Exception e) {
+
         }
     }
 
@@ -191,6 +238,30 @@ public class Data_Barang extends javax.swing.JInternalFrame {
         }
     }
 
+    public void pencarian3(String sql) {
+        Object[] Baris = {"No", "Kode", "Nama"};
+        tabmode3 = new DefaultTableModel(null, Baris);
+        tabelPemasok.setModel(tabmode3);
+        int brs = tabelPemasok.getRowCount();
+        for (int i = 0; 1 < brs; i++) {
+            tabmode3.removeRow(1);
+        }
+        try {
+            java.sql.Statement stat = conn.createStatement();
+            ResultSet hasil = stat.executeQuery(sql);
+            while (hasil.next()) {
+                String kodePemasok = hasil.getString("kode");
+                String namaPemasok = hasil.getString("nama");
+                String[] data = {"", kodePemasok, namaPemasok};
+                tabmode3.addRow(data);
+                noTable3();
+                lebarKolom3();
+            }
+        } catch (Exception e) {
+
+        }
+    }
+
     public Data_Barang() {
         initComponents();
         dataTable();
@@ -198,6 +269,7 @@ public class Data_Barang extends javax.swing.JInternalFrame {
         aktif();
         tanggal();
         inpKodeBarang.requestFocus();
+        comboBoxUpdate();
     }
 
     /**
@@ -236,6 +308,12 @@ public class Data_Barang extends javax.swing.JInternalFrame {
         inpCariKategori = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabelKategori = new javax.swing.JTable();
+        listPemasok = new javax.swing.JDialog();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel18 = new javax.swing.JLabel();
+        inpCariPemasok = new javax.swing.JTextField();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tabelPemasok = new javax.swing.JTable();
         panelTitle = new javax.swing.JPanel();
         lbTitle = new javax.swing.JLabel();
         mainPanel = new javax.swing.JPanel();
@@ -260,6 +338,7 @@ public class Data_Barang extends javax.swing.JInternalFrame {
         btnCariKat = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
         inpNamaPemasok = new javax.swing.JTextField();
+        btnCariPemasok = new javax.swing.JButton();
         rightPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelBarang = new javax.swing.JTable();
@@ -268,7 +347,6 @@ public class Data_Barang extends javax.swing.JInternalFrame {
 
         UbahDataBarang.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         UbahDataBarang.setTitle("Ubah Data");
-        UbahDataBarang.setPreferredSize(new java.awt.Dimension(402, 480));
         UbahDataBarang.setResizable(false);
         UbahDataBarang.setSize(new java.awt.Dimension(400, 540));
         UbahDataBarang.setType(java.awt.Window.Type.POPUP);
@@ -449,7 +527,7 @@ public class Data_Barang extends javax.swing.JInternalFrame {
         );
         UbahDataBarangLayout.setVerticalGroup(
             UbahDataBarangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(ContainerUbahKategori, javax.swing.GroupLayout.DEFAULT_SIZE, 533, Short.MAX_VALUE)
+            .addComponent(ContainerUbahKategori, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)
         );
 
         listKategori.setTitle("List Kategori");
@@ -484,6 +562,9 @@ public class Data_Barang extends javax.swing.JInternalFrame {
         tabelKategori.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tabelKategoriMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                tabelKategoriMouseEntered(evt);
             }
         });
         jScrollPane2.setViewportView(tabelKategori);
@@ -524,6 +605,80 @@ public class Data_Barang extends javax.swing.JInternalFrame {
         listKategoriLayout.setVerticalGroup(
             listKategoriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+
+        listPemasok.setTitle("List Pemasok");
+        listPemasok.setAlwaysOnTop(true);
+        listPemasok.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        listPemasok.setSize(new java.awt.Dimension(300, 325));
+
+        jPanel5.setBackground(new java.awt.Color(2, 48, 71));
+        jPanel5.setPreferredSize(new java.awt.Dimension(300, 325));
+
+        jLabel18.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(238, 155, 0));
+        jLabel18.setText("Cari Pemasok");
+
+        inpCariPemasok.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                inpCariPemasokKeyTyped(evt);
+            }
+        });
+
+        tabelPemasok.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3"
+            }
+        ));
+        tabelPemasok.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelPemasokMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(tabelPemasok);
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(0, 21, Short.MAX_VALUE)
+                        .addComponent(jLabel18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(inpCariPemasok, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel18)
+                    .addComponent(inpCariPemasok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout listPemasokLayout = new javax.swing.GroupLayout(listPemasok.getContentPane());
+        listPemasok.getContentPane().setLayout(listPemasokLayout);
+        listPemasokLayout.setHorizontalGroup(
+            listPemasokLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        listPemasokLayout.setVerticalGroup(
+            listPemasokLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         setClosable(true);
@@ -662,6 +817,15 @@ public class Data_Barang extends javax.swing.JInternalFrame {
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("Nama Pemasok");
 
+        btnCariPemasok.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
+        btnCariPemasok.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/loupe.png"))); // NOI18N
+        btnCariPemasok.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCariPemasok.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCariPemasokActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout leftPanelLayout = new javax.swing.GroupLayout(leftPanel);
         leftPanel.setLayout(leftPanelLayout);
         leftPanelLayout.setHorizontalGroup(
@@ -674,16 +838,24 @@ public class Data_Barang extends javax.swing.JInternalFrame {
                             .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE))
                         .addGap(19, 19, 19)
                         .addGroup(leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(inpKodeBarang)
                             .addComponent(inpNamaBarang)
+                            .addComponent(btnTanggal, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
+                            .addGroup(leftPanelLayout.createSequentialGroup()
+                                .addComponent(inpNamaPemasok, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnCariPemasok))))
+                    .addGroup(leftPanelLayout.createSequentialGroup()
+                        .addGroup(leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(30, 30, 30)
+                        .addGroup(leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(inpKetKat)
-                            .addComponent(btnTanggal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(leftPanelLayout.createSequentialGroup()
                                 .addGroup(leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(leftPanelLayout.createSequentialGroup()
@@ -691,8 +863,7 @@ public class Data_Barang extends javax.swing.JInternalFrame {
                                         .addGap(0, 0, Short.MAX_VALUE))
                                     .addComponent(inpKodeKat))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnCariKat))
-                            .addComponent(inpNamaPemasok)))
+                                .addComponent(btnCariKat))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, leftPanelLayout.createSequentialGroup()
                         .addGap(173, 173, 173)
                         .addComponent(btnTambah, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -725,30 +896,32 @@ public class Data_Barang extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel13)
-                    .addComponent(inpNamaPemasok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(inpNamaPemasok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCariPemasok))
                 .addGap(18, 18, 18)
                 .addGroup(leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel10)
                     .addComponent(btnCariKat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(inpKodeKat))
+                    .addComponent(inpKodeKat, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
                     .addComponent(inpJumlah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(inpKetKat, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(35, 35, 35)
-                .addGroup(leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnTambah)
-                    .addComponent(btnHapus)
-                    .addComponent(btnUbah))
-                .addGap(18, 18, 18)
-                .addGroup(leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnBersih)
-                    .addComponent(btnBatal))
-                .addContainerGap(204, Short.MAX_VALUE))
+                    .addGroup(leftPanelLayout.createSequentialGroup()
+                        .addComponent(inpKetKat, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(35, 35, 35)
+                        .addGroup(leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnTambah)
+                            .addComponent(btnHapus)
+                            .addComponent(btnUbah))
+                        .addGap(18, 18, 18)
+                        .addGroup(leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnBersih)
+                            .addComponent(btnBatal)))
+                    .addComponent(jLabel4))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         rightPanel.setBackground(new java.awt.Color(38, 70, 83));
@@ -960,7 +1133,7 @@ public class Data_Barang extends javax.swing.JInternalFrame {
         inpNamaPemasok.setText(namaPemasok);
         inpUbahNamaPemasok.setText(namaPemasok);
         inpKodeKat.setText(kodeKategori);
-        inpUbahKetKat.setText(kodeKategori);
+        inpUbahKategori.setText(kodeKategori);
         inpJumlah.setText(jumlah);
         inpUbahJumlah.setText(jumlah);
         inpKetKat.setText(keterangan);
@@ -1058,6 +1231,59 @@ public class Data_Barang extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_inpUbahJumlahActionPerformed
 
+    private void btnCariPemasokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCariPemasokActionPerformed
+        dataTable3();
+        lebarKolom3();
+        listPemasok.setLocationRelativeTo(this);
+        listPemasok.setVisible(true);
+    }//GEN-LAST:event_btnCariPemasokActionPerformed
+
+    private void inpCariPemasokKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inpCariPemasokKeyTyped
+        String sqlPencarian3 = "select * from tb_supplier where kode like '%" + inpCariPemasok.getText() + "%' or "
+                + "nama like '%" + inpCariPemasok.getText() + "%'";
+        pencarian3(sqlPencarian3);
+        lebarKolom3();
+    }//GEN-LAST:event_inpCariPemasokKeyTyped
+
+    private void tabelPemasokMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelPemasokMouseClicked
+        int bar = tabelPemasok.getSelectedRow();
+        String no = tabmode3.getValueAt(bar, 0).toString();
+        String kode = tabmode3.getValueAt(bar, 1).toString();
+        String nama = tabmode3.getValueAt(bar, 2).toString();
+
+        inpNamaPemasok.setText(nama);
+        listPemasok.dispose();
+        inpKodeKat.requestFocus();
+    }//GEN-LAST:event_tabelPemasokMouseClicked
+
+    private void tabelKategoriMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelKategoriMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tabelKategoriMouseEntered
+
+    private void comboBoxUpdate() {
+        JComboBox jc = new JComboBox();
+        JPanel panel = new JPanel();
+        Connection con;
+        Statement st;
+        ResultSet rs;
+
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost/db_stock_barang", "root", "");
+            st = con.createStatement();
+            String s = "select * from tb_supplier";
+            rs = st.executeQuery(s);
+            while (rs.next()) {
+                jc.addItem(rs.getString(1) + " === " + rs.getString(2));
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ERROR");
+        }
+        panel.add(jc);
+        this.getContentPane().add(panel);
+        this.setVisible(true);
+
+    }
+
     void setExtendedState(int MAXIMIZED_BOTH) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -1070,6 +1296,7 @@ public class Data_Barang extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnBersih;
     private javax.swing.JButton btnCari;
     private javax.swing.JButton btnCariKat;
+    private javax.swing.JButton btnCariPemasok;
     private javax.swing.JButton btnHapus;
     private javax.swing.JButton btnTambah;
     private com.toedter.calendar.JDateChooser btnTanggal;
@@ -1079,6 +1306,7 @@ public class Data_Barang extends javax.swing.JInternalFrame {
     private com.toedter.calendar.JDateChooser btnUbahTanggal;
     private javax.swing.JTextField inpCari;
     private javax.swing.JTextField inpCariKategori;
+    private javax.swing.JTextField inpCariPemasok;
     private javax.swing.JTextField inpJumlah;
     private javax.swing.JTextField inpKetKat;
     private javax.swing.JTextField inpKodeBarang;
@@ -1101,6 +1329,7 @@ public class Data_Barang extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1110,15 +1339,19 @@ public class Data_Barang extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel lbTitle;
     private javax.swing.JPanel leftPanel;
     private javax.swing.JDialog listKategori;
+    private javax.swing.JDialog listPemasok;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JPanel panelTitle;
     private javax.swing.JPanel rightPanel;
     private javax.swing.JTable tabelBarang;
     private javax.swing.JTable tabelKategori;
+    private javax.swing.JTable tabelPemasok;
     // End of variables declaration//GEN-END:variables
 }
